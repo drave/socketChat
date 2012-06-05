@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
  * App listen.
  */
 
-app.listen(process.env.PORT, function () {
+app.listen(3000, function () {
   var addr = app.address();
   console.log('   app listening on http://' + addr.address + ':' + addr.port);
 });
