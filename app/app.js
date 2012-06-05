@@ -53,7 +53,8 @@ app.listen(3000, function () {
 
 var io = sio.listen(app)
   , nicknames = {}
-  , avatars = {};
+  , avatars = {}
+  , players = {};
 
 io.sockets.on('connection', function (socket) {
   
@@ -100,8 +101,38 @@ io.sockets.on('connection', function (socket) {
       io.sockets.emit('nicknames', nicknames);
       //socket.join('justin bieber fans');
       socket.join('@'+socket.nickname);
+      players[nick]['x'] = 0;
+      players[nick]['y'] = 0;
+
+      socket.broadcast.emit('players',players);
+      
+
+
     }
   });
+
+  socket.on('move', function (direction)){
+    if(players[socket.nickname]){
+      switch(direction) {
+        case "UP":
+          players[socket.nickname]['y']--;
+          break;
+        case "DOWN":
+          players[socket.nickname]['y']++;
+          break;
+        case "LEFT":
+          players[socket.nickname]['x']--;
+          break;
+        case "RIGHT":
+          players[socket.nickname]['x']++;
+          break;
+        }
+    } else {
+      players[socket.nickname]['x'] = 0;
+      players[socket.nickname]['y'] = 0;
+    }
+    socket.broadcast.emit('players',players);
+  };
 
   socket.on('disconnect', function () {
     if (!socket.nickname) return;
