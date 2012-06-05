@@ -39,6 +39,14 @@ html
         }
       });
 
+      socket.on('players',function (players)) {
+        $('#grid .player').remove();
+        for (var i in players) {
+            $('#grid').append($('<div>').attr('id','player-'+players[i]['nick']).addClass('player').addClass('x-'+players[i]['x']).addClass('y-'+players[i]['y']);
+          }
+        }
+      };
+
       socket.on('user message', message);
 
       socket.on('private message', privatemessage);
@@ -113,8 +121,21 @@ html
           }
         });
 
-
-
+        $(document).keydown(function(event){
+          var keyCode;
+            if(event == null) {
+              keyCode = window.event.keyCode;
+            } else {
+              keyCode = event.keyCode;
+            }
+          socket.emit('move',{
+            38: UP,
+            37: LEFT,
+            40: DOWN,
+            39: RIGHT
+          }[keyCode]);  
+        }); 
+        
         $('#nicknames b').live('click',function(){
           var cur = $(this);
           var ex = false;
@@ -135,6 +156,8 @@ html
         };
       });
   body
+    #grid
+      #world
     #chat
       #nickname
         form.wrap#set-nickname
