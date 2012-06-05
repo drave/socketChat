@@ -101,6 +101,7 @@ io.sockets.on('connection', function (socket) {
       io.sockets.emit('nicknames', nicknames);
       //socket.join('justin bieber fans');
       socket.join('@'+socket.nickname);
+      players[nick] = {};
       players[nick]['x'] = 0;
       players[nick]['y'] = 0;
 
@@ -128,6 +129,7 @@ io.sockets.on('connection', function (socket) {
           break;
         }
     } else {
+      players[socket.nickname] = {};
       players[socket.nickname]['x'] = 0;
       players[socket.nickname]['y'] = 0;
     }

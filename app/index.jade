@@ -128,10 +128,10 @@ html
               keyCode = event.keyCode;
             }
           socket.emit('move',{
-            38: UP,
-            37: LEFT,
-            40: DOWN,
-            39: RIGHT
+            38: "UP",
+            37: "LEFT",
+            40: "DOWN",
+            39: "RIGHT"
           }[keyCode]);  
         }); 
         
