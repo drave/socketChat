@@ -11,6 +11,12 @@ div.avatar {
   background-color: #f00;
   z-index: 1000;
 }
+#grid {
+  width: 600px;
+  height: 400px;
+  border: 1px solid #808080;
+  margin-bottom: 20px;
+}
 #chat,
 #nickname,
 #messages {
