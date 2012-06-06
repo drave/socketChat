@@ -12,10 +12,54 @@ div.avatar {
   z-index: 1000;
 }
 #grid {
-  width: 600px;
-  height: 400px;
+  width: 700px;
+  height: 500px;
   border: 1px solid #808080;
   margin-bottom: 20px;
+  position: relative;
+}
+#grid .player {
+  display: block;
+  border: 1px solid #f00;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+}
+#grid .x--3 {
+  left: 0px;
+}
+#grid .x--2 {
+  left: 100px;
+}
+#grid .x--1 {
+  left: 200px;
+}
+#grid .x-0 {
+  left: 300px;
+}
+#grid .x-1 {
+  left: 400px;
+}
+#grid .x-2 {
+  left: 500px;
+}
+#grid .x-3 {
+  left: 600px;
+}
+#grid .y--2 {
+  top: 0px;
+}
+#grid .y--1 {
+  top: 100px;
+}
+#grid .y-0 {
+  top: 200px;
+}
+#grid .y-1 {
+  top: 300px;
+}
+#grid .y-2 {
+  top: 400px;
 }
 #chat,
 #nickname,

@@ -42,7 +42,7 @@ html
       socket.on('players',function (players) {
         $('#grid .player').remove();
         for (var i in players) {
-          $('#grid').append($('<div>').attr('id','player-'+players[i]['nick']).addClass('player').addClass('x-'+players[i]['x']).addClass('y-'+players[i]['y']));
+          $('#grid').append($('<div>').attr('id','player-'+players[i]['nick']).addClass('player').addClass('x-'+players[i]['x']).addClass('y-'+players[i]['y']).html(players[i]['nick']));
          }
       });
 
@@ -114,11 +114,11 @@ html
           return false;
         });
 
-        $(document).mousemove(function(e){
+        /*$(document).mousemove(function(e){
           if($('#chat').hasClass('nickname-set')){
             socket.emit('avatar', e.pageX, e.pageY );
           }
-        });
+        });*/
 
         $(document).keydown(function(event){
           var keyCode;
@@ -127,12 +127,24 @@ html
             } else {
               keyCode = event.keyCode;
             }
-          socket.emit('move',{
-            38: "UP",
-            37: "LEFT",
-            40: "DOWN",
-            39: "RIGHT"
-          }[keyCode]);  
+            switch(keyCode) {
+                case 38:    
+                  event.preventDefault();
+                  socket.emit('move',"UP");
+                  break;
+                case 40:
+                  event.preventDefault();
+                  socket.emit('move',"DOWN");
+                  break;
+                case 37:
+                  event.preventDefault();
+                  socket.emit('move',"LEFT");
+                  break;
+                case 39:
+                  event.preventDefault();
+                  socket.emit('move',"RIGHT");
+                  break;
+            }
         }); 
         
         $('#nicknames b').live('click',function(){

@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
  * App listen.
  */
 
-app.listen(3000, function () {
+app.listen(3001, function () {
   var addr = app.address();
   console.log('   app listening on http://' + addr.address + ':' + addr.port);
 });
@@ -90,7 +90,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('nickname', function (nick, fn) {
-    if (nicknames[nick]) {
+    if (nicknames[nick] || nick == '') {
       fn(true);
     } else {
       fn(false);
@@ -101,19 +101,20 @@ io.sockets.on('connection', function (socket) {
       io.sockets.emit('nicknames', nicknames);
       //socket.join('justin bieber fans');
       socket.join('@'+socket.nickname);
+      
       players[nick] = {};
+      players[nick]['nick'] = nick;
       players[nick]['x'] = 0;
       players[nick]['y'] = 0;
-
-      socket.broadcast.emit('players',players);
+      if(players[nick]){
+        io.sockets.emit('players',players);
+      }
       
-
-
     }
   });
 
   socket.on('move', function (direction){
-    if(players[socket.nickname]){
+    if(socket.nickname != '' && players[socket.nickname]){
       switch(direction) {
         case "UP":
           players[socket.nickname]['y']--;
@@ -128,12 +129,8 @@ io.sockets.on('connection', function (socket) {
           players[socket.nickname]['x']++;
           break;
         }
-    } else {
-      players[socket.nickname] = {};
-      players[socket.nickname]['x'] = 0;
-      players[socket.nickname]['y'] = 0;
-    }
-    socket.broadcast.emit('players',players);
+    } 
+    io.sockets.emit('players',players);
   });
 
   socket.on('disconnect', function () {
